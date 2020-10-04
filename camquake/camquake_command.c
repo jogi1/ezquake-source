@@ -32,9 +32,9 @@ void Camquake_Write_Config(struct camquake_setup *setup, char *name) {
 		    fprintf(f, "camquake setup add_trigger \"%s\" \"%s\" %f \"%s\"\n", name, Camquake_Event_Name(trigger->type), trigger->time, trigger->command);
 	    }
 	    fclose(f);
-	    Com_Printf("setup \'%s\" saved as \"%s\" in \"%s\"", setup->name, name, filepath);
+	    Com_Printf("setup \'%s\" saved as \"%s\" in \"%s\"\n", setup->name, name, filepath);
     } else {
-	    Com_Printf("could not save to \"%s\".", filepath);
+	    Com_Printf("could not save to \"%s\"\n", filepath);
     }
 }
 

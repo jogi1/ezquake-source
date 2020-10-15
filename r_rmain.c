@@ -693,6 +693,10 @@ static void R_RenderScene(void)
 {
 	R_TraceEnterNamedRegion("R_DrawWorld");
 	R_DrawWorld();		// adds static entities to the list
+#ifdef CAMQUAKE
+	Camquake_Render_3DFrame();
+#endif
+
 	R_TraceLeaveNamedRegion();
 
 	if (R_WaterAlpha() == 1) {
@@ -749,9 +753,6 @@ void R_PostProcessScene(void)
 
 static void R_Render3DEffects(void)
 {
-#ifdef CAMQUAKE
-	Camquake_Render_Frame();
-#endif
 	// Adds particles (all types)
 	R_DrawParticles();
 
@@ -812,6 +813,9 @@ void R_RenderView(void)
 
 	renderer.RenderView();
 
+#ifdef CAMQUAKE
+	Camquake_Render_Frame();
+#endif
 	R_PerformanceEndFrame();
 }
 

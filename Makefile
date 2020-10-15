@@ -551,6 +551,9 @@ ifdef CAMQUAKE
     OBJS_c += camquake/camquake_input.o
     OBJS_c += camquake/camquake_2d.o
     OBJS_c += camquake/camquake_event.o
+    OBJS_c += camquake/camquake_texture.o
+    OBJS_c += camquake/camquake_texture_command.o
+    OBJS_c += camquake/camquake_utility.o
     CFLAGS += -DCAMQUAKE
 endif
 

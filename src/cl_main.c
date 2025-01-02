@@ -104,6 +104,18 @@ cvar_t	cl_delay_packet = {"cl_delay_packet", "0", 0, Rulesets_OnChange_cl_delay_
 cvar_t  cl_delay_packet_target = { "cl_delay_packet_target", "0", 0, Rulesets_OnChange_cl_delay_packet };
 cvar_t  cl_delay_packet_dev = { "cl_delay_packet_deviation", "0", 0, Rulesets_OnChange_cl_delay_packet };
 
+void OnChange_black_frames(cvar_t *var, char *value, qbool *cancel) {
+  if (var == NULL || value == NULL)
+    return;
+  if (var->integer == 0) {
+    if (!VID_VSyncIsOn()) {
+      Com_Printf("vsync needs to be enabled for this to work\n");
+    }
+    var->integer = atoi(value);
+  }
+}
+cvar_t  black_frames = { "black_frames", "0", 0, OnChange_black_frames };
+
 cvar_t	cl_shownet = {"cl_shownet", "0"};	// can be 0, 1, or 2
 #if defined(PROTOCOL_VERSION_FTE) || defined(PROTOCOL_VERSION_FTE2) || defined(PROTOCOL_VERSION_MVD1)
 cvar_t  cl_pext = {"cl_pext", "1"};					// allow/disallow protocol extensions at all.
@@ -1762,6 +1774,7 @@ static void CL_InitLocal(void)
 	Cvar_Register(&cl_confirmquit);
 	Cvar_Register(&cl_window_caption);
 	Cvar_Register(&cl_onload);
+	Cvar_Register(&black_frames);
 
 #ifdef WIN32
 	Cvar_Register(&cl_verify_qwprotocol);

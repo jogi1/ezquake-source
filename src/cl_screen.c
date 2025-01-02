@@ -1013,6 +1013,8 @@ void SCR_UpdateScreenPostPlayerView(void)
 	R_EndRendering();
 }
 
+int current_black_frame = 0;
+extern cvar_t black_frames;
 // This is called every frame, and can also be called explicitly to flush text to the screen.
 // WARNING: be very careful calling this from elsewhere, because the refresh needs almost the entire 256k of stack space!
 qbool SCR_UpdateScreen(void)
@@ -1024,7 +1026,12 @@ qbool SCR_UpdateScreen(void)
 
 	renderer.ScreenDrawStart();
 
-	SCR_UpdateScreenPlayerView(UPDATESCREEN_POSTPROCESS);
+	if (black_frames.integer > 0 && current_black_frame <= black_frames.integer) {
+		current_black_frame++;
+	} else {
+		current_black_frame = 0;
+		SCR_UpdateScreenPlayerView(UPDATESCREEN_POSTPROCESS);
+	}
 
 	SCR_UpdateScreenPostPlayerView();
 

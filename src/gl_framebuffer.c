@@ -880,11 +880,17 @@ static qbool VID_FramebufferInit(framebuffer_id id, int effective_width, int eff
 
 	return false;
 }
+extern cvar_t black_frames;
+extern int current_black_frame;
 
 void GL_FramebufferScreenDrawStart(void)
 {
 	if (vid_framebuffer.integer) {
 		VID_FramebufferInit(framebuffer_std, VID_ScaledWidth3D(), VID_ScaledHeight3D());
+	}
+	if  (black_frames.integer > 0 && current_black_frame > 0) {
+		R_ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		glClear(GL_COLOR_BUFFER_BIT);
 	}
 }
 
@@ -896,6 +902,7 @@ qbool GL_Framebuffer2DSwitch(void)
 			R_Viewport(0, 0, glConfig.vidWidth, glConfig.vidHeight);
 			R_ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
 			glClear(GL_COLOR_BUFFER_BIT);
+			VID_FramebufferFlip();
 			return true;
 		}
 	}

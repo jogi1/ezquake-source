@@ -889,8 +889,10 @@ void GL_FramebufferScreenDrawStart(void)
 		VID_FramebufferInit(framebuffer_std, VID_ScaledWidth3D(), VID_ScaledHeight3D());
 	}
 	if  (black_frames.integer > 0 && current_black_frame > 0) {
-		R_ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+		R_ClearColor(0.1f, 0.1f, 0.1f, 0.0f);
 		glClear(GL_COLOR_BUFFER_BIT);
+		glConfig.reversed_depth = false;
+		glClearDepth(1.0f);
 	}
 }
 
